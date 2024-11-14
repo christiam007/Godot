@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="Estado" load_steps=2 format=3 uid="uid://bxv51tc1w02vx"]
+
+[ext_resource type="Script" path="res://Data/Estados/Estado.gd" id="1_1gl5y"]
+
+[resource]
+script = ExtResource("1_1gl5y")
+nombre = "caminar"

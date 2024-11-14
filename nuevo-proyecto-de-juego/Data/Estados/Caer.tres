@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="Estado" load_steps=2 format=3 uid="uid://c01adrh168nu8"]
+
+[ext_resource type="Script" path="res://Data/Estados/Estado.gd" id="1_nqml5"]
+
+[resource]
+script = ExtResource("1_nqml5")
+nombre = "caer"

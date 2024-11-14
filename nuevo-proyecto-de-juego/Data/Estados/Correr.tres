@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="Estado" load_steps=2 format=3 uid="uid://ct3uifuw463q2"]
+
+[ext_resource type="Script" path="res://Data/Estados/Estado.gd" id="1_glthd"]
+
+[resource]
+script = ExtResource("1_glthd")
+nombre = "correr"
