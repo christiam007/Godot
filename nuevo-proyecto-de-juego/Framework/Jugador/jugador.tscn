@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://ovjtsg3wth03"]
+[gd_scene load_steps=65 format=3 uid="uid://ovjtsg3wth03"]
 
 [ext_resource type="Texture2D" uid="uid://d37dfvwkd2nlb" path="res://Assets/Personaje/Fall.png" id="1_kidey"]
 [ext_resource type="Script" path="res://Framework/Jugador/jugador.gd" id="1_o4kxf"]
@@ -13,6 +13,9 @@
 [ext_resource type="Resource" uid="uid://ct3uifuw463q2" path="res://Data/Estados/Correr.tres" id="11_jgdkm"]
 [ext_resource type="Resource" uid="uid://buq4pfvufbarw" path="res://Data/Estados/Brincar.tres" id="12_cfneh"]
 [ext_resource type="Resource" uid="uid://c01adrh168nu8" path="res://Data/Estados/Caer.tres" id="13_6vx0m"]
+[ext_resource type="PackedScene" uid="uid://be4gn7foe4umr" path="res://Framework/Componentes/hitbox_componentes.tscn" id="14_nnftt"]
+[ext_resource type="PackedScene" uid="uid://de3pdtgwdsu5u" path="res://Framework/Componentes/health_box_componentes.tscn" id="15_3846v"]
+[ext_resource type="PackedScene" uid="uid://bjkbj15pp7db8" path="res://Framework/Componentes/salud_componente.tscn" id="16_2sife"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pr56o"]
 atlas = ExtResource("1_kidey")
@@ -358,6 +361,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kcexc"]
 size = Vector2(17, 26)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_osp3a"]
+size = Vector2(18, 5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2t8o"]
+size = Vector2(17, 24)
+
 [node name="Jugador" type="CharacterBody2D"]
 script = ExtResource("1_o4kxf")
 
@@ -374,4 +383,28 @@ shape = SubResource("RectangleShape2D_kcexc")
 [node name="MaquinaEstados" parent="Componentes" instance=ExtResource("7_52x42")]
 estados = Array[ExtResource("8_pkmh7")]([ExtResource("9_t1gt7"), ExtResource("10_s7q57"), ExtResource("11_jgdkm"), ExtResource("12_cfneh"), ExtResource("13_6vx0m")])
 
+[node name="HitboxComponentes" parent="Componentes" instance=ExtResource("14_nnftt")]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Colision" parent="Componentes/HitboxComponentes" index="0"]
+position = Vector2(0, 15)
+shape = SubResource("RectangleShape2D_osp3a")
+
+[node name="HealthBoxComponentes" parent="Componentes" node_paths=PackedStringArray("componente_salud") instance=ExtResource("15_3846v")]
+collision_layer = 8
+collision_mask = 0
+componente_salud = NodePath("../SaludComponente")
+
+[node name="Colision" parent="Componentes/HealthBoxComponentes" index="0"]
+position = Vector2(0.5, 2)
+shape = SubResource("RectangleShape2D_c2t8o")
+
+[node name="SaludComponente" parent="Componentes" instance=ExtResource("16_2sife")]
+
 [connection signal="estado_actualizado" from="Componentes/MaquinaEstados" to="." method="_on_maquina_estados_estado_actualizado"]
+[connection signal="salud_actualizada" from="Componentes/SaludComponente" to="." method="_on_salud_componente_salud_actualizada"]
+[connection signal="sin_salud" from="Componentes/SaludComponente" to="." method="_on_salud_componente_sin_salud"]
+
+[editable path="Componentes/HitboxComponentes"]
+[editable path="Componentes/HealthBoxComponentes"]

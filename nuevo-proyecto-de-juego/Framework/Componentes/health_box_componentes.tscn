@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://de3pdtgwdsu5u"]
+
+[ext_resource type="Script" path="res://Framework/Componentes/health_box_componentes.gd" id="1_wd2f2"]
+
+[node name="HealthBoxComponentes" type="Area2D"]
+script = ExtResource("1_wd2f2")
+
+[node name="Colision" type="CollisionShape2D" parent="."]
+debug_color = Color(0.230017, 0.635961, 0.139344, 0.42)

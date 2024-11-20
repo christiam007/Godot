@@ -8,7 +8,7 @@ extends CharacterBody2D
 var velocidad = 200.0
 var velocidad_corriendo = 150.0
 
-var impulso_salto = -350.0
+var impulso_salto = -550.0
 var salto_interrumpido : bool = false
 var corriendo : bool = false
 var direccion 
@@ -106,3 +106,11 @@ func _on_maquina_estados_estado_actualizado(nuevo_estado: Estado, estado_anterio
 			sprites.play("caida")
 			
 		
+
+
+func _on_salud_componente_salud_actualizada(actual: int, maxima: int) -> void:
+	print("El jugador recibio daño")
+
+
+func _on_salud_componente_sin_salud() -> void:
+	print("El jugador no tiene salud")

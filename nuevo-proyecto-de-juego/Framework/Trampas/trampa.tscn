@@ -1,0 +1,130 @@
+[gd_scene load_steps=9 format=3 uid="uid://b7p2txxw38hap"]
+
+[ext_resource type="Script" path="res://Framework/Trampas/trampa.gd" id="1_7q05t"]
+[ext_resource type="Texture2D" uid="uid://c8ntuqp3mx2ht" path="res://Assets/Objetos/6 Traps/4.png" id="1_xe3c2"]
+[ext_resource type="PackedScene" uid="uid://be4gn7foe4umr" path="res://Framework/Componentes/hitbox_componentes.tscn" id="2_eenhu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vytcf"]
+
+[sub_resource type="Animation" id="Animation_84n2m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HitboxComponentes:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_exuxf"]
+resource_name = "idle"
+length = 0.7
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 6, 6, 0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HitboxComponentes:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ndl5a"]
+_data = {
+"RESET": SubResource("Animation_84n2m"),
+"idle": SubResource("Animation_exuxf")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jkri4"]
+size = Vector2(15, 11)
+
+[node name="Trampa" type="StaticBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_7q05t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_vytcf")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_xe3c2")
+hframes = 7
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ndl5a")
+}
+
+[node name="HitboxComponentes" parent="." instance=ExtResource("2_eenhu")]
+collision_layer = 0
+collision_mask = 8
+monitoring = false
+monitorable = false
+
+[node name="Colision" parent="HitboxComponentes" index="0"]
+position = Vector2(0.5, 18.5)
+shape = SubResource("RectangleShape2D_jkri4")
+
+[node name="Delay" type="Timer" parent="."]
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="Delay" to="." method="_on_delay_timeout"]
+
+[editable path="HitboxComponentes"]

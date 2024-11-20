@@ -48,7 +48,10 @@ brincar={
 
 [layer_names]
 
-2d_physics/layer_1="Jugador"
+2d_physics/layer_1="Mundo"
+2d_physics/layer_2="Enemigo"
+2d_physics/layer_3="Trampa"
+2d_physics/layer_4="Jugador"
 
 [physics]
 
