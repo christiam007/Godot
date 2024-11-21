@@ -121,6 +121,7 @@ monitorable = false
 [node name="Colision" parent="HitboxComponentes" index="0"]
 position = Vector2(0.5, 18.5)
 shape = SubResource("RectangleShape2D_jkri4")
+debug_color = Color(0.939099, 0.236771, 0.187587, 0.42)
 
 [node name="Delay" type="Timer" parent="."]
 

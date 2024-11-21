@@ -1,10 +1,12 @@
-[gd_scene load_steps=9 format=4 uid="uid://bqgkoq7yhx4y1"]
+[gd_scene load_steps=11 format=4 uid="uid://bqgkoq7yhx4y1"]
 
 [ext_resource type="Texture2D" uid="uid://bfjhyk3yeg1tj" path="res://Assets/Entornos/1.png" id="1_0akyf"]
 [ext_resource type="Texture2D" uid="uid://d0r1koxouikut" path="res://Assets/Entornos/Tileset.png" id="1_mjbxg"]
 [ext_resource type="PackedScene" uid="uid://ovjtsg3wth03" path="res://Framework/Jugador/jugador.tscn" id="2_5xuy1"]
 [ext_resource type="PackedScene" uid="uid://8pjhnbk6vsex" path="res://Framework/Trampas/TrampaSierra.tscn" id="3_r4dps"]
 [ext_resource type="PackedScene" uid="uid://78jbi5hceysa" path="res://Framework/Trampas/trampaPicos.tscn" id="4_mtxeh"]
+[ext_resource type="PackedScene" uid="uid://btucwyxrnsmqe" path="res://Framework/Enemigos/01_monitor_enemigo.tscn" id="6_g7pb0"]
+[ext_resource type="PackedScene" uid="uid://bj2njy8gdfs2c" path="res://Framework/Objetos/Moneda.tscn" id="7_2vfbc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0v38d"]
 size = Vector2(176, 671)
@@ -327,7 +329,8 @@ texture = ExtResource("1_mjbxg")
 14:10/0/physics_layer_0/polygon_0/one_way = true
 
 [sub_resource type="TileSet" id="TileSet_542lq"]
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 11
+physics_layer_0/collision_mask = 11
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Terreno01"
 terrain_set_0/terrain_0/color = Color(0.471792, 0.170893, 0.806243, 1)
@@ -418,3 +421,13 @@ position = Vector2(155, 488)
 
 [node name="Trampa3" parent="Trampas" instance=ExtResource("4_mtxeh")]
 position = Vector2(170, 488)
+
+[node name="Enemigos" type="Node2D" parent="."]
+position = Vector2(121, 92)
+
+[node name="01 Monitor Enemigo" parent="Enemigos" instance=ExtResource("6_g7pb0")]
+position = Vector2(-5, 351)
+tiempo_espera = 10.0
+
+[node name="Moneda" parent="." instance=ExtResource("7_2vfbc")]
+position = Vector2(315, 415)

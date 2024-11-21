@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @onready var maquina_estados: Node = $Componentes/MaquinaEstados
+@onready var hitbox : HitBox = $Componentes/HitboxComponentes
 @onready var sprites: AnimatedSprite2D = $Sprites
 
 
@@ -15,6 +16,7 @@ var direccion
 
 func _ready() -> void:
 	maquina_estados.establecer_estado("idle") 
+	add_to_group("Jugador")
 
 func detectar_input():
 	# Handle jump.
@@ -46,9 +48,12 @@ func detectar_input():
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
+		hitbox.monitoring = true
 		if salto_interrumpido and velocity.y < 0:
 			velocity.y += 1000*delta
 		velocity += get_gravity() * delta
+	else:
+		hitbox.monitoring = false
 		
 	detectar_input()
 	logica_maquina_estados()

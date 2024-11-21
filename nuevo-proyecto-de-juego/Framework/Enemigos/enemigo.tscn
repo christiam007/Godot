@@ -1,0 +1,55 @@
+[gd_scene load_steps=11 format=3 uid="uid://datruvj0llgga"]
+
+[ext_resource type="PackedScene" uid="uid://be4gn7foe4umr" path="res://Framework/Componentes/hitbox_componentes.tscn" id="1_djs5v"]
+[ext_resource type="Script" path="res://Framework/Enemigos/enemigo.gd" id="1_pkr2c"]
+[ext_resource type="PackedScene" uid="uid://de3pdtgwdsu5u" path="res://Framework/Componentes/health_box_componentes.tscn" id="2_412bh"]
+[ext_resource type="PackedScene" uid="uid://bjkbj15pp7db8" path="res://Framework/Componentes/salud_componente.tscn" id="3_lc16n"]
+[ext_resource type="PackedScene" uid="uid://c5gabrwssou5l" path="res://Framework/MaquinaEstados/maquina_estados.tscn" id="5_3tkjc"]
+[ext_resource type="Script" path="res://Data/Estados/Estado.gd" id="6_rb12t"]
+[ext_resource type="Resource" uid="uid://c25j0o65t8e70" path="res://Data/Estados/Idle.tres" id="7_sqsdh"]
+[ext_resource type="Resource" uid="uid://bxv51tc1w02vx" path="res://Data/Estados/Caminar.tres" id="8_i5hgv"]
+[ext_resource type="Resource" uid="uid://buq4pfvufbarw" path="res://Data/Estados/Brincar.tres" id="9_tomtf"]
+[ext_resource type="Resource" uid="uid://c01adrh168nu8" path="res://Data/Estados/Caer.tres" id="10_i0ws2"]
+
+[node name="Enemigo" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_pkr2c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="RayCastSuelo" type="RayCast2D" parent="."]
+target_position = Vector2(0, 5)
+
+[node name="RayCastParedes" type="RayCast2D" parent="."]
+position = Vector2(-8, 0)
+target_position = Vector2(-5, 0)
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Componentes" type="Node2D" parent="."]
+
+[node name="SaludComponente" parent="Componentes" instance=ExtResource("3_lc16n")]
+salud_maxima = 50
+
+[node name="HealthBoxComponentes" parent="Componentes" node_paths=PackedStringArray("componente_salud") instance=ExtResource("2_412bh")]
+collision_layer = 2
+collision_mask = 0
+componente_salud = NodePath("../SaludComponente")
+
+[node name="HitboxComponentes" parent="Componentes" instance=ExtResource("1_djs5v")]
+collision_layer = 0
+collision_mask = 8
+
+[node name="Colision" parent="Componentes/HitboxComponentes" index="0"]
+debug_color = Color(0.939099, 0.236771, 0.187587, 0.42)
+
+[node name="MaquinaEstados" parent="." instance=ExtResource("5_3tkjc")]
+estados = Array[ExtResource("6_rb12t")]([ExtResource("7_sqsdh"), ExtResource("8_i5hgv"), ExtResource("9_tomtf"), ExtResource("10_i0ws2")])
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="estado_actualizado" from="MaquinaEstados" to="." method="_on_maquina_estados_estado_actualizado"]
+
+[editable path="Componentes/HealthBoxComponentes"]
+[editable path="Componentes/HitboxComponentes"]
