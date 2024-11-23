@@ -18,6 +18,10 @@ config/features=PackedStringArray("4.3", "Forward Plus")
 
 Estado="*res://Estado.gd"
 
+[display]
+
+window/stretch/mode="viewport"
+
 [input]
 
 mover_izquierda={

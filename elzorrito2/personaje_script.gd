@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var sprites: AnimatedSprite2D = $sprites
 @onready var sprites2: AnimatedSprite2D = $sprites2
 @onready var menu: Control = $popup
+@onready var dañador: Area2D = $"dañador"
 
 
 var velocidad = 100.0
@@ -24,6 +25,7 @@ var is_damaged = false  # Variable para verificar si el personaje ha recibido da
 
 func _ready() -> void:
 	menu.visible = false
+	dañador.collision_layer = 0
 	
 func _physics_process(delta: float) -> void:
 	forma = Estado.forma_actual
@@ -34,6 +36,7 @@ func _physics_process(delta: float) -> void:
 		impulso_salto = -250.0
 		velocidad = 50.0
 		velocidad_corriendo = 80.0
+		dañador.collision_layer = 1
 		
 	elif forma == "zorro":
 		sprites = $sprites
@@ -42,6 +45,7 @@ func _physics_process(delta: float) -> void:
 		impulso_salto = -350.0
 		velocidad = 100.0
 		velocidad_corriendo = 150.0
+		dañador.collision_layer = 0
 	
 	if Input.is_action_pressed("menu"):  # Si la tecla asociada a "menu" está siendo mantenida
 		if not menu_visible:  # Solo mostrar el menú si no está visible
@@ -171,8 +175,9 @@ func actualizar_sprites() -> void:
 		impulso_salto = -250.0
 		velocidad = 50.0
 		velocidad_corriendo = 80.0
+		dañador.collision_layer = 0
 
-	elif forma == "zorro":
+	elif forma == "zorro":		
 	# Cambiar la referencia de los sprites
 		sprites2.visible = false
 		sprites = $sprites
@@ -183,7 +188,7 @@ func actualizar_sprites() -> void:
 		impulso_salto = -350.0
 		velocidad = 100.0
 		velocidad_corriendo = 150.0
-
+		dañador.collision_layer = 1
 
 
 func _on_button_pressed() -> void:
