@@ -42,9 +42,6 @@ componente_salud = NodePath("../SaludComponente")
 collision_layer = 0
 collision_mask = 8
 
-[node name="Colision" parent="Componentes/HitboxComponentes" index="0"]
-debug_color = Color(0.939099, 0.236771, 0.187587, 0.42)
-
 [node name="MaquinaEstados" parent="." instance=ExtResource("5_3tkjc")]
 estados = Array[ExtResource("6_rb12t")]([ExtResource("7_sqsdh"), ExtResource("8_i5hgv"), ExtResource("9_tomtf"), ExtResource("10_i0ws2")])
 

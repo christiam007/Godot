@@ -15,6 +15,10 @@ run/main_scene="res://Framework/Mundo/mundo.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GameData="*res://Framework/Mundo/GameData.gd"
+
 [display]
 
 window/size/viewport_width=1280

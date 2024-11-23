@@ -392,7 +392,6 @@ collision_mask = 2
 [node name="Colision" parent="Componentes/HitboxComponentes" index="0"]
 position = Vector2(0.5, 15)
 shape = SubResource("RectangleShape2D_osp3a")
-debug_color = Color(0.939099, 0.236771, 0.187587, 0.42)
 
 [node name="HealthBoxComponentes" parent="Componentes" node_paths=PackedStringArray("componente_salud") instance=ExtResource("15_3846v")]
 collision_layer = 8
