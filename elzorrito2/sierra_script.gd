@@ -21,12 +21,11 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		Estado.daño = true
 		
 		# Verificar el estado y aplicar daño
-		if Estado.formas[0] == "zorro":
+		if Estado.forma_actual == "zorro":
 			Estado.vida -= 20
-		elif Estado.formas[1] == "sapo":
-			Estado.vida -= 40
-		elif Estado.formas[2] == "cactus":
-			Estado.vida -= 10
+
+		elif Estado.forma_actual == "cactus":
+			Estado.vida -= 5
 	await get_tree().create_timer(1.0).timeout
 	print("Entró un cuerpo2.")
 

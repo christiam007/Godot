@@ -2,6 +2,10 @@ extends CharacterBody2D
 
 @onready var camera: Camera2D = $Camera2D
 @onready var sprites: AnimatedSprite2D = $sprites
+@onready var sprites2: AnimatedSprite2D = $sprites2
+@onready var menu: Control = $popup
+
+
 var velocidad = 100.0
 var velocidad_corriendo = 150.0
 
@@ -14,13 +18,43 @@ const GRAVITY = 1000.0  # Gravedad personalizada, ajusta según sea necesario.
 # Control de la aceleración (esto reduce la inercia)
 var aceleracion = 1200.0  # Ajusta este valor para controlar la inercia
 
+var menu_visible = false 
 var forma
 var is_damaged = false  # Variable para verificar si el personaje ha recibido daño
 
 func _ready() -> void:
-	forma = Estado.forma_actual
-
+	menu.visible = false
+	
 func _physics_process(delta: float) -> void:
+	forma = Estado.forma_actual
+	if forma == "cactus":
+		sprites = $sprites2
+		sprites2 = $sprites
+		sprites2.visible=false
+		impulso_salto = -250.0
+		velocidad = 50.0
+		velocidad_corriendo = 80.0
+		
+	elif forma == "zorro":
+		sprites = $sprites
+		sprites2 = $sprites2
+		sprites2.visible=false
+		impulso_salto = -350.0
+		velocidad = 100.0
+		velocidad_corriendo = 150.0
+	
+	if Input.is_action_pressed("menu"):  # Si la tecla asociada a "menu" está siendo mantenida
+		if not menu_visible:  # Solo mostrar el menú si no está visible
+			menu_visible = true
+			menu.visible = true  # Mostrar el menú
+
+	else:
+		if menu_visible:  # Si la tecla ya no está presionada y el menú estaba visible
+			menu_visible = false
+			menu.visible = false  # Ocultar el menú
+
+		 
+	
 	if Estado.vida <= 0:
 		sprites.play("muerte")
 		return  # Detener el proceso si el personaje está muerto
@@ -28,6 +62,7 @@ func _physics_process(delta: float) -> void:
 	if Estado.daño == true and not is_damaged:
 		is_damaged = true  # Marca que el personaje ha recibido daño
 		await reproducir_animacion_daño()
+		
 
 	# Si el personaje ha recibido daño, eliminamos la inercia
 	if is_damaged:
@@ -122,3 +157,42 @@ func reproducir_animacion_daño() -> void:
 	await get_tree().create_timer(1.0).timeout  # Esto hace que el código espere 1 segundo
 	Estado.daño = false
 	is_damaged = false  # Marcar que el daño ha terminado, permitiendo que el personaje se mueva de nuevo
+
+
+func actualizar_sprites() -> void:
+	if forma == "cactus":
+			# Cambiar la referencia de los sprites
+		sprites2.visible = false
+		sprites = $sprites2
+		sprites2 = $sprites
+		sprites2.visible = true
+
+		# Ajustar las propiedades del personaje en función de la forma
+		impulso_salto = -250.0
+		velocidad = 50.0
+		velocidad_corriendo = 80.0
+
+	elif forma == "zorro":
+	# Cambiar la referencia de los sprites
+		sprites2.visible = false
+		sprites = $sprites
+		sprites2 = $sprites2
+		sprites2.visible = true
+
+		# Ajustar las propiedades del personaje
+		impulso_salto = -350.0
+		velocidad = 100.0
+		velocidad_corriendo = 150.0
+
+
+
+func _on_button_pressed() -> void:
+	Estado.forma_actual = "cactus"
+	actualizar_sprites()
+	actualizar_sprites()
+	
+
+func _on_button_2_pressed() -> void:
+	Estado.forma_actual = "zorro"
+	actualizar_sprites()
+	actualizar_sprites()
