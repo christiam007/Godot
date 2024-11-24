@@ -6,33 +6,33 @@ extends CharacterBody2D
 @onready var menu: Control = $popup
 @onready var dañador: Area2D = $"dañador"
 
-
 var velocidad = 100.0
 var velocidad_corriendo = 150.0
-
 var impulso_salto = -350.0
 var salto_interrumpido : bool = false
 var corriendo : bool = false
 var direccion
-const GRAVITY = 1000.0  # Gravedad personalizada, ajusta según sea necesario.
+const GRAVITY = 1000.0
 
-# Control de la aceleración (esto reduce la inercia)
-var aceleracion = 1200.0  # Ajusta este valor para controlar la inercia
-
+var aceleracion = 1200.0
 var menu_visible = false 
 var forma
-var is_damaged = false  # Variable para verificar si el personaje ha recibido daño
+var is_damaged = false
+var is_dying = false  # Nueva variable para controlar el estado de muerte
 
 func _ready() -> void:
 	menu.visible = false
 	dañador.collision_layer = 0
 	
 func _physics_process(delta: float) -> void:
+	if is_dying:  # Si está muriendo, no procesar más lógica
+		return
+		
 	forma = Estado.forma_actual
 	if forma == "cactus":
 		sprites = $sprites2
 		sprites2 = $sprites
-		sprites2.visible=false
+		sprites2.visible = false
 		impulso_salto = -250.0
 		velocidad = 50.0
 		velocidad_corriendo = 80.0
@@ -41,61 +41,48 @@ func _physics_process(delta: float) -> void:
 	elif forma == "zorro":
 		sprites = $sprites
 		sprites2 = $sprites2
-		sprites2.visible=false
+		sprites2.visible = false
 		impulso_salto = -350.0
 		velocidad = 100.0
 		velocidad_corriendo = 150.0
 		dañador.collision_layer = 0
 	
-	if Input.is_action_pressed("menu"):  # Si la tecla asociada a "menu" está siendo mantenida
-		if not menu_visible:  # Solo mostrar el menú si no está visible
+	if Input.is_action_pressed("menu"):
+		if not menu_visible:
 			menu_visible = true
-			menu.visible = true  # Mostrar el menú
-
+			menu.visible = true
 	else:
-		if menu_visible:  # Si la tecla ya no está presionada y el menú estaba visible
+		if menu_visible:
 			menu_visible = false
-			menu.visible = false  # Ocultar el menú
-
-		 
+			menu.visible = false
 	
-	if Estado.vida <= 0:
-		sprites.play("muerte")
-		return  # Detener el proceso si el personaje está muerto
-
-	if Estado.daño == true and not is_damaged:
-		is_damaged = true  # Marca que el personaje ha recibido daño
-		await reproducir_animacion_daño()
-		
-
-	# Si el personaje ha recibido daño, eliminamos la inercia
-	if is_damaged:
-		# Detenemos cualquier movimiento horizontal inmediatamente
-		velocity.x = 0
-		# No aplicar más aceleración hasta que termine la animación de daño
-		# Esto previene que el personaje siga moviéndose después del daño
+	if Estado.vida <= 0 and not is_dying:
+		morir()
 		return
 
-	# Agregar la gravedad si el personaje no está en el suelo
-	if not is_on_floor():
-		velocity.y += GRAVITY * delta  # Aplica la gravedad
+	if Estado.daño == true and not is_damaged:
+		is_damaged = true
+		await reproducir_animacion_daño()
 
-		# Si el personaje no está en el suelo y no está saltando, significa que está cayendo.
+	if is_damaged:
+		velocity.x = 0
+		return
+
+	if not is_on_floor():
+		velocity.y += GRAVITY * delta
+
 		if not salto_interrumpido:
 			if not sprites.is_playing() or sprites.animation != "caida":
-				sprites.play("caida")  # Activa la animación de caída si no está saltando
+				sprites.play("caida")
 
 	detectar_input()
 
-	# Solo cambia flip_h si la dirección cambia.
 	if direccion != 0:
-		# Si la dirección es positiva y flip_h es falso, o si es negativa y flip_h es verdadero, cambia flip_h.
 		if (direccion > 0 and sprites.flip_h == true):
 			sprites.flip_h = false
 		elif (direccion < 0 and sprites.flip_h == false):
 			sprites.flip_h = true
 
-		# Mueve al personaje (la aceleración hace que se mueva más rápido)
 		if corriendo:
 			velocity.x = move_toward(velocity.x, direccion * velocidad_corriendo, aceleracion * delta)
 			if not sprites.is_playing() or sprites.animation != "correr":
@@ -105,12 +92,10 @@ func _physics_process(delta: float) -> void:
 			if not sprites.is_playing() or sprites.animation != "andar":
 				sprites.play("andar")
 	else:
-		# Si no hay dirección, desacelera al personaje a 0
 		velocity.x = move_toward(velocity.x, 0, aceleracion * delta)
 		if direccion == 0 and not sprites.is_playing() or sprites.animation != "idle":
 			sprites.play("idle")
 
-	# Verificar si está en el suelo para elegir la animación correcta
 	if is_on_floor():
 		if sprites.animation == "brincar":
 			sprites.play("idle")
@@ -118,7 +103,7 @@ func _physics_process(delta: float) -> void:
 			if corriendo:
 				sprites.play("correr")
 			else:
-				sprites.play("caminar")
+				sprites.play("andar")
 		else:
 			sprites.play("idle")
 	else:
@@ -127,23 +112,35 @@ func _physics_process(delta: float) -> void:
 		else:
 			sprites.play("caida")
 
-	move_and_slide()  # El parámetro Vector2.UP indica hacia arriba
+	move_and_slide()
 
-# Función para detectar la entrada del jugador (movimiento y salto)
+# Nueva función para manejar la muerte del personaje
+func morir() -> void:
+	is_dying = true
+	velocity = Vector2.ZERO  # Detener todo movimiento
+	sprites.play("muerte")
+	
+	# Crear un timer para esperar antes de reiniciar
+	var timer = get_tree().create_timer(1.0)
+	timer.timeout.connect(func(): 
+		if get_tree():
+			Estado.vida = 100
+			# Puedes cambiar esto a change_scene_to_file si prefieres ir a una escena de game over
+			get_tree().reload_current_scene()
+		else:
+			print("Error: get_tree() es nulo")
+	)
+
 func detectar_input():
-	# Manejar el salto.
 	if Input.is_action_just_pressed("brincar") and is_on_floor():
 		velocity.y = impulso_salto
 		salto_interrumpido = false
 	
 	elif Input.is_action_just_released("brincar"):
-		# Si el salto es interrumpido, solo dejamos de saltar y permitimos que entre en caída
 		salto_interrumpido = true
 	
-	# Obtener la dirección de movimiento
 	direccion = Input.get_axis("mover_izquierda", "mover_derecha")
 
-	# Manejar la acción de correr
 	if Input.is_action_just_pressed("correr"):
 		corriendo = true
 		if not sprites.is_playing() or sprites.animation != "correr":
@@ -153,49 +150,37 @@ func detectar_input():
 		if not sprites.is_playing() or sprites.animation != "idle":
 			sprites.play("idle")
 
-# Función para reproducir la animación de daño y esperar 1 segundo
 func reproducir_animacion_daño() -> void:
-	# Reproducir la animación de daño
 	sprites.play("daño")
-	# Esperar un segundo y luego regresar a la animación normal
-	await get_tree().create_timer(1.0).timeout  # Esto hace que el código espere 1 segundo
+	if get_tree():
+		await get_tree().create_timer(1.0).timeout
 	Estado.daño = false
-	is_damaged = false  # Marcar que el daño ha terminado, permitiendo que el personaje se mueva de nuevo
-
+	is_damaged = false
 
 func actualizar_sprites() -> void:
 	if forma == "cactus":
-			# Cambiar la referencia de los sprites
 		sprites2.visible = false
 		sprites = $sprites2
 		sprites2 = $sprites
 		sprites2.visible = true
-
-		# Ajustar las propiedades del personaje en función de la forma
 		impulso_salto = -250.0
 		velocidad = 50.0
 		velocidad_corriendo = 80.0
 		dañador.collision_layer = 0
-
 	elif forma == "zorro":		
-	# Cambiar la referencia de los sprites
 		sprites2.visible = false
 		sprites = $sprites
 		sprites2 = $sprites2
 		sprites2.visible = true
-
-		# Ajustar las propiedades del personaje
 		impulso_salto = -350.0
 		velocidad = 100.0
 		velocidad_corriendo = 150.0
 		dañador.collision_layer = 1
 
-
 func _on_button_pressed() -> void:
 	Estado.forma_actual = "cactus"
 	actualizar_sprites()
 	actualizar_sprites()
-	
 
 func _on_button_2_pressed() -> void:
 	Estado.forma_actual = "zorro"
