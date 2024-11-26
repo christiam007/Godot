@@ -1,4 +1,4 @@
-[gd_scene load_steps=191 format=4 uid="uid://bb5kmiroe1m1i"]
+[gd_scene load_steps=192 format=4 uid="uid://bb5kmiroe1m1i"]
 
 [ext_resource type="Script" path="res://escenas/mundo.gd" id="1_a6nyp"]
 [ext_resource type="Texture2D" uid="uid://cgkl663as3egj" path="res://assets/Tileset.png" id="1_mxpuc"]
@@ -25,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://dsptljiii7t7f" path="res://assets/Stun - copia (2).png" id="21_tx0mq"]
 [ext_resource type="Texture2D" uid="uid://cjhkiwg8moloc" path="res://assets/Hit - copia (2).png" id="23_njwwx"]
 [ext_resource type="Texture2D" uid="uid://4vpf143v5030" path="res://assets/4.png" id="24_c20in"]
+[ext_resource type="PackedScene" uid="uid://dopuybmnbfo0h" path="res://escenas/moneda.tscn" id="26_atehk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kulef"]
 texture = ExtResource("1_mxpuc")
@@ -1584,6 +1585,19 @@ position = Vector2(-2171.5, 228)
 shape = SubResource("RectangleShape2D_bo8k5")
 debug_color = Color(0.923026, 0.0903603, 0.641262, 0.42)
 
+[node name="CanvasLayer" type="CanvasLayer" parent="personaje"]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="personaje/CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MonedasLabel2" type="Label" parent="personaje/CanvasLayer/HBoxContainer"]
+layout_mode = 2
+text = "Monedas: "
+
+[node name="MonedasLabel" type="Label" parent="personaje/CanvasLayer/HBoxContainer"]
+layout_mode = 2
+
 [node name="sierra" type="Node2D" parent="."]
 position = Vector2(-757, -439)
 script = ExtResource("7_gkjro")
@@ -1754,6 +1768,15 @@ frame_progress = 0.765797
 position = Vector2(1062, 145)
 shape = SubResource("CircleShape2D_esb2d")
 debug_color = Color(0.951145, 0.0947815, 0.502354, 0.42)
+
+[node name="moneda" parent="." instance=ExtResource("26_atehk")]
+position = Vector2(-1865, 244)
+
+[node name="moneda2" parent="." instance=ExtResource("26_atehk")]
+position = Vector2(-1844, 244)
+
+[node name="moneda3" parent="." instance=ExtResource("26_atehk")]
+position = Vector2(-1823, 244)
 
 [connection signal="pressed" from="personaje/popup/Button" to="personaje" method="_on_button_pressed"]
 [connection signal="pressed" from="personaje/popup/Button2" to="personaje" method="_on_button_2_pressed"]

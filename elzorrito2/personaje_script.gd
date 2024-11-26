@@ -1,10 +1,13 @@
 extends CharacterBody2D
+class_name Player
 
 @onready var camera: Camera2D = $Camera2D
 @onready var sprites: AnimatedSprite2D = $sprites
 @onready var sprites2: AnimatedSprite2D = $sprites2
 @onready var menu: Control = $popup
 @onready var dañador: Area2D = $"dañador"
+@onready var monedaLabel := $CanvasLayer/HBoxContainer/MonedasLabel
+
 
 var velocidad = 100.0
 var velocidad_corriendo = 150.0
@@ -21,6 +24,7 @@ var is_damaged = false
 var is_dying = false  # Nueva variable para controlar el estado de muerte
 
 func _ready() -> void:
+	Global.player = self
 	menu.visible = false
 	dañador.collision_layer = 0
 	
@@ -186,3 +190,9 @@ func _on_button_2_pressed() -> void:
 	Estado.forma_actual = "zorro"
 	actualizar_sprites()
 	actualizar_sprites()
+	
+func actualizarInterfazMoneda():
+	monedaLabel.text = str(Global.moneda)
+	
+	
+	
