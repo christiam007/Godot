@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://qam6kc76o3k7"]
+
+[ext_resource type="Script" path="res://negro.gd" id="1_21lon"]
+[ext_resource type="Texture2D" uid="uid://cle0lv606t5qi" path="res://assets/negro.png" id="2_fl83q"]
+
+[node name="Negro" type="Node2D"]
+script = ExtResource("1_21lon")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Negro" type="Sprite2D" parent="."]
+position = Vector2(42, -39)
+scale = Vector2(51.3125, 34.5625)
+texture = ExtResource("2_fl83q")

@@ -1,0 +1,164 @@
+[gd_scene load_steps=17 format=3 uid="uid://dcn3llk0xsera"]
+
+[ext_resource type="Script" path="res://menu.gd" id="1_u0y7y"]
+[ext_resource type="Texture2D" uid="uid://bw7347fr34e4u" path="res://assets/New Piskel.png" id="2_u1ojm"]
+[ext_resource type="Texture2D" uid="uid://dyq85qhbh2vsn" path="res://assets/portada.png" id="3_d7sk1"]
+[ext_resource type="FontFile" uid="uid://dclmdu2s13p3e" path="res://assets/GOBLOX.ttf" id="3_t5tjp"]
+[ext_resource type="AudioStream" uid="uid://djfd6heif1xon" path="res://assets/sonidos/07. Bad Guys.mp3" id="4_kd2ml"]
+[ext_resource type="AudioStream" uid="uid://tc0fykx86ix7" path="res://assets/sonidos/coin10.wav" id="6_capxj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8hcvq"]
+atlas = ExtResource("3_d7sk1")
+region = Rect2(0, 0, 480, 480)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nej1w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8hcvq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hmn3h"]
+atlas = ExtResource("3_d7sk1")
+region = Rect2(0, 480, 480, 480)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jgg6c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hmn3h")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_6lp6o"]
+color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_r4mxo"]
+color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_dp2tq"]
+color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_1w0fy"]
+color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_j643c"]
+color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_tv1rh"]
+color = Color(0, 0, 0, 0)
+
+[node name="Menu" type="Node2D"]
+script = ExtResource("1_u0y7y")
+
+[node name="NewPiskel" type="Sprite2D" parent="."]
+position = Vector2(48.0001, -13)
+scale = Vector2(7.35, 4.06875)
+texture = ExtResource("2_u1ojm")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -25.0
+offset_top = -58.0
+offset_right = 375.0
+offset_bottom = 253.0
+
+[node name="Portada2" type="AnimatedSprite2D" parent="Control"]
+position = Vector2(228, 169)
+scale = Vector2(1.2, 1.13)
+sprite_frames = SubResource("SpriteFrames_nej1w")
+
+[node name="Portada" type="AnimatedSprite2D" parent="Control"]
+position = Vector2(223, 169)
+scale = Vector2(1.2, 1.13)
+sprite_frames = SubResource("SpriteFrames_jgg6c")
+frame_progress = 0.263899
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Label2" type="Label" parent="."]
+offset_left = -512.0
+offset_top = -202.0
+offset_right = 494.0
+offset_bottom = -15.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_t5tjp")
+theme_override_font_sizes/font_size = 130
+text = "ZORRO 'n' cactus"
+
+[node name="Label" type="Label" parent="."]
+offset_left = -512.0
+offset_top = -220.0
+offset_right = 494.0
+offset_bottom = -33.0
+theme_override_fonts/font = ExtResource("3_t5tjp")
+theme_override_font_sizes/font_size = 130
+text = "ZORRO 'n' cactus"
+
+[node name="Button" type="Button" parent="."]
+offset_left = -512.0
+offset_right = -182.0
+offset_bottom = 95.0
+theme_override_colors/font_hover_pressed_color = Color(0, 0.670588, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0.764052, 0, 1)
+theme_override_fonts/font = ExtResource("3_t5tjp")
+theme_override_font_sizes/font_size = 70
+theme_override_styles/focus = SubResource("StyleBoxLine_6lp6o")
+theme_override_styles/disabled = SubResource("StyleBoxLine_r4mxo")
+theme_override_styles/hover_pressed = SubResource("StyleBoxLine_dp2tq")
+theme_override_styles/hover = SubResource("StyleBoxLine_1w0fy")
+theme_override_styles/pressed = SubResource("StyleBoxLine_j643c")
+theme_override_styles/normal = SubResource("StyleBoxLine_tv1rh")
+text = "Comenzar"
+
+[node name="Button2" type="Button" parent="."]
+offset_left = -512.0
+offset_top = 95.0
+offset_right = -182.0
+offset_bottom = 190.0
+theme_override_colors/font_hover_pressed_color = Color(0, 0.670588, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0.764052, 0, 1)
+theme_override_fonts/font = ExtResource("3_t5tjp")
+theme_override_font_sizes/font_size = 70
+theme_override_styles/focus = SubResource("StyleBoxLine_6lp6o")
+theme_override_styles/disabled = SubResource("StyleBoxLine_r4mxo")
+theme_override_styles/hover_pressed = SubResource("StyleBoxLine_dp2tq")
+theme_override_styles/hover = SubResource("StyleBoxLine_1w0fy")
+theme_override_styles/pressed = SubResource("StyleBoxLine_j643c")
+theme_override_styles/normal = SubResource("StyleBoxLine_tv1rh")
+text = "opciones"
+
+[node name="07_BadGuys" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(-833, 173)
+stream = ExtResource("4_kd2ml")
+parameters/looping = true
+
+[node name="Coin10" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(-858, 111)
+stream = ExtResource("6_capxj")
+
+[node name="Label3" type="Label" parent="."]
+offset_left = -388.0
+offset_top = -75.0
+offset_right = -95.0
+offset_bottom = -38.0
+rotation = -0.174533
+theme_override_colors/font_color = Color(0.903117, 0.774339, 0.136415, 1)
+theme_override_fonts/font = ExtResource("3_t5tjp")
+theme_override_font_sizes/font_size = 50
+text = "funky time!"
+
+[connection signal="mouse_entered" from="Control" to="." method="_on_control_mouse_entered"]
+[connection signal="mouse_exited" from="Control" to="." method="_on_control_mouse_exited"]
+[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="mouse_entered" from="Button2" to="." method="_on_button_2_mouse_entered"]
+[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]

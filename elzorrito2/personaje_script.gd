@@ -7,7 +7,7 @@ class_name Player
 @onready var menu: Control = $popup
 @onready var dañador: Area2D = $"dañador"
 @onready var monedaLabel := $CanvasLayer/HBoxContainer/MonedasLabel
-
+@onready var espinas: Sprite2D = $Espinas
 
 var velocidad = 100.0
 var velocidad_corriendo = 150.0
@@ -24,6 +24,7 @@ var is_damaged = false
 var is_dying = false  # Nueva variable para controlar el estado de muerte
 
 func _ready() -> void:
+	espinas.visible = false
 	Global.player = self
 	menu.visible = false
 	dañador.collision_layer = 0
@@ -34,6 +35,7 @@ func _physics_process(delta: float) -> void:
 		
 	forma = Estado.forma_actual
 	if forma == "cactus":
+		espinas.visible=true
 		sprites = $sprites2
 		sprites2 = $sprites
 		sprites2.visible = false
@@ -43,6 +45,7 @@ func _physics_process(delta: float) -> void:
 		dañador.collision_layer = 1
 		
 	elif forma == "zorro":
+		espinas.visible=false
 		sprites = $sprites
 		sprites2 = $sprites2
 		sprites2.visible = false
@@ -163,6 +166,7 @@ func reproducir_animacion_daño() -> void:
 
 func actualizar_sprites() -> void:
 	if forma == "cactus":
+		espinas.visible=false
 		sprites2.visible = false
 		sprites = $sprites2
 		sprites2 = $sprites
@@ -172,6 +176,7 @@ func actualizar_sprites() -> void:
 		velocidad_corriendo = 80.0
 		dañador.collision_layer = 0
 	elif forma == "zorro":		
+		espinas.visible=true
 		sprites2.visible = false
 		sprites = $sprites
 		sprites2 = $sprites2
@@ -191,8 +196,13 @@ func _on_button_2_pressed() -> void:
 	actualizar_sprites()
 	actualizar_sprites()
 	
-func actualizarInterfazMoneda():
-	monedaLabel.text = str(Global.moneda)
+
+			
 	
 	
 	
+	
+
+
+func _on_area_2d_2_body_entered(body: Node2D) -> void:
+	pass # Replace with function body.

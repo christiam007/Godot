@@ -1,8 +1,23 @@
-[gd_scene load_steps=8 format=3 uid="uid://dopuybmnbfo0h"]
+[gd_scene load_steps=8 format=3 uid="uid://iel8dqyqsm1n"]
 
-[ext_resource type="Script" path="res://escenas/moneda.gd" id="1_fr2iq"]
+[ext_resource type="Script" path="res://moneda.gd" id="1_3fusg"]
 [ext_resource type="Texture2D" uid="uid://bew7850tt2h2d" path="res://assets/mone.png" id="1_xlcfm"]
 [ext_resource type="AudioStream" uid="uid://tc0fykx86ix7" path="res://assets/sonidos/coin10.wav" id="3_08agn"]
+
+[sub_resource type="Animation" id="Animation_2f1f1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
 
 [sub_resource type="Animation" id="Animation_l0o4u"]
 resource_name = "new_animation"
@@ -22,21 +37,6 @@ tracks/0/keys = {
 "values": [1, 1, 2, 3, 4, 5, 6]
 }
 
-[sub_resource type="Animation" id="Animation_2f1f1"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [1]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dpu12"]
 _data = {
 "RESET": SubResource("Animation_2f1f1"),
@@ -46,7 +46,7 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_xdjr6"]
 
 [node name="moneda" type="Area2D"]
-script = ExtResource("1_fr2iq")
+script = ExtResource("1_3fusg")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_xlcfm")

@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://ciowbfc2eidjv"]
+
+[ext_resource type="Script" path="res://fin.gd" id="1_0cyy5"]
+[ext_resource type="Texture2D" uid="uid://cle0lv606t5qi" path="res://assets/negro.png" id="1_qhvm4"]
+[ext_resource type="FontFile" uid="uid://dclmdu2s13p3e" path="res://assets/GOBLOX.ttf" id="2_m6d26"]
+[ext_resource type="AudioStream" uid="uid://ig3aaupyulck" path="res://assets/sonidos/your_love_is_my_drug.mp3" id="4_6ws46"]
+
+[node name="Fin" type="Node2D"]
+script = ExtResource("1_0cyy5")
+
+[node name="Negro" type="Sprite2D" parent="."]
+position = Vector2(32.5, -18.5)
+scale = Vector2(57.1562, 42.7188)
+texture = ExtResource("1_qhvm4")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -264.0
+offset_top = -131.0
+offset_right = 206.0
+offset_bottom = 109.0
+theme_override_fonts/font = ExtResource("2_m6d26")
+theme_override_font_sizes/font_size = 300
+text = "FIN"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="YourLoveIsMyDrug" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(-108, 176)
+stream = ExtResource("4_6ws46")
+
+[node name="Label2" type="Label" parent="."]
+offset_left = -166.0
+offset_top = 229.0
+offset_right = 148.0
+offset_bottom = 275.0
+theme_override_fonts/font = ExtResource("2_m6d26")
+theme_override_font_sizes/font_size = 35
+text = "gracias por jugar!"

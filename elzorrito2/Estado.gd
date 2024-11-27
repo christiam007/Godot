@@ -5,3 +5,4 @@ extends Node
 @onready var formas = ["zorro", "cactus"]
 @onready var forma_actual = "zorro"
 @onready var daño : bool = false
+@onready var cancion :float = 0.0
