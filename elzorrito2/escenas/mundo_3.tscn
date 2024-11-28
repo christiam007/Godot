@@ -1,4 +1,4 @@
-[gd_scene load_steps=193 format=4 uid="uid://cmprp7dblabqw"]
+[gd_scene load_steps=194 format=4 uid="uid://cmprp7dblabqw"]
 
 [ext_resource type="Script" path="res://mundo_3.gd" id="1_epf18"]
 [ext_resource type="Texture2D" uid="uid://cgkl663as3egj" path="res://assets/Tileset.png" id="2_7durp"]
@@ -30,6 +30,7 @@
 [ext_resource type="FontFile" uid="uid://dclmdu2s13p3e" path="res://assets/GOBLOX.ttf" id="28_aswbp"]
 [ext_resource type="Texture2D" uid="uid://bwpg26ths01tj" path="res://assets/icons.png" id="29_j44tc"]
 [ext_resource type="Texture2D" uid="uid://c0h7p62wo8x8v" path="res://assets/helmet.png" id="30_2l3wg"]
+[ext_resource type="AudioStream" uid="uid://d3ip7j73l1w4j" path="res://assets/sonidos/hunki-funki-200733.mp3" id="31_vaxpj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kyjjw"]
 texture = ExtResource("2_7durp")
@@ -1831,6 +1832,10 @@ sprite_frames = SubResource("SpriteFrames_4iyy4")
 position = Vector2(1063, 146)
 shape = SubResource("CircleShape2D_ico4q")
 debug_color = Color(0.951145, 0.0947815, 0.502354, 0.42)
+
+[node name="space-game-loop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("31_vaxpj")
+autoplay = true
 
 [connection signal="body_entered" from="trampaelectrica/Area2D" to="trampaelectrica" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="trampaelectrica/Area2D" to="trampaelectrica" method="_on_area_2d_body_exited"]

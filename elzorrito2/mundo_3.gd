@@ -1,8 +1,10 @@
 extends Node2D
 
+@onready var musica2 = $"space-game-loop"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	musica2.play()
 	pass # Replace with function body.
 
 
