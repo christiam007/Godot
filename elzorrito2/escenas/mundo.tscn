@@ -1367,7 +1367,7 @@ size = Vector2(17, 23)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g8p5n"]
 size = Vector2(5385, 279)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gdpy5"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lpk1q"]
 texture = ExtResource("1_mxpuc")
 0:0/0 = 0
 0:0/0/terrain_set = 0
@@ -1541,7 +1541,7 @@ texture = ExtResource("1_mxpuc")
 [sub_resource type="TileSet" id="TileSet_6qdre"]
 physics_layer_0/collision_layer = 1
 terrain_set_0/mode = 0
-sources/0 = SubResource("TileSetAtlasSource_gdpy5")
+sources/0 = SubResource("TileSetAtlasSource_lpk1q")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wwwps"]
 radius = 7.07107

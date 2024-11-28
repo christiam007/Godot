@@ -26,4 +26,4 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 func _on_area_2d_2_body_entered(body: Node2D) -> void:
 	if body.name == "personaje":
 		print("entro en el portal..")
-		get_tree().change_scene_to_file("res://escenas/negro.tscn")
+		get_tree().change_scene_to_file("res://escenas/mundo_3.tscn")
